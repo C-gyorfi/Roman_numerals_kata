@@ -4,34 +4,34 @@ def roman_numerals(n)
   nrOfTens = (n - nrOfThousands*1000 - nrOfHundreds*100) / 10
   nrOfSingleDigits = n - nrOfThousands*1000 - nrOfHundreds*100 - nrOfTens*10
 
-  num_of_Thousands(nrOfThousands) +
-  num_of_hundreds(nrOfHundreds) +
-  roman_numerals_less_hundred(nrOfTens) +
-  roman_numerals_less_nine(nrOfSingleDigits)
+  get_Thousands(nrOfThousands) +
+  get_Hundreds(nrOfHundreds) +
+  get_Tens(nrOfTens) +
+  get_SingleDigits(nrOfSingleDigits)
 end
 
-def roman_numerals_less_nine(n)
+def get_SingleDigits(n)
   return "I" * n if n <= 3
   return "IV" if n == 4
   return "V" + "I" * (n-5) if n > 4 && n < 9
   "IX"
 end
 
-def roman_numerals_less_hundred(n)
+def get_Tens(n)
   return "X" * n if n <= 3
   return "XL" if n == 4
   return "L" + "X" * (n-5) if n > 4 && n < 9
   "XC"
 end
 
-def num_of_hundreds(n)
+def get_Hundreds(n)
   return "C" * n if n <= 3
   return "CD" if n == 4
   return "D" + "C" * (n-5) if n > 4 && n < 9
   "CM"
 end
 
-def num_of_Thousands(n)
+def get_Thousands(n)
   "M" * n
 end
 
