@@ -1,11 +1,13 @@
 def roman_numerals(n)
-  nrOfHundreds = n / 100
-  nrOfTens = (n - nrOfHundreds*100) / 10
-  nrOfsingle = n - nrOfHundreds*100 - nrOfTens*10
+  nrOfThousands = n / 1000
+  nrOfHundreds = (n - nrOfThousands*1000) / 100
+  nrOfTens = (n - nrOfThousands*1000 - nrOfHundreds*100) / 10
+  nrOfSingleDigits = n - nrOfThousands*1000 - nrOfHundreds*100 - nrOfTens*10
 
+  num_of_Thousands(nrOfThousands) +
   num_of_hundreds(nrOfHundreds) +
   roman_numerals_less_hundred(nrOfTens) +
-  roman_numerals_less_nine(nrOfsingle)
+  roman_numerals_less_nine(nrOfSingleDigits)
 end
 
 def roman_numerals_less_nine(n)
@@ -24,9 +26,13 @@ end
 
 def num_of_hundreds(n)
   return "C" * n if n <= 3
-  return "DC" if n == 4
+  return "CD" if n == 4
   return "D" + "C" * (n-5) if n > 4 && n < 9
   "CM"
+end
+
+def num_of_Thousands(n)
+  "M" * n
 end
 
 describe "roman_numerals" do
@@ -78,9 +84,13 @@ describe "roman_numerals" do
     90 => "XC",
     99 => "XCIX",
     100 => "C",
+    459 => "CDLIX",
     555 => "DLV",
     557 => "DLVII",
-    999 => "CMXCIX"
+    999 => "CMXCIX",
+    1459 => "MCDLIX",
+    5987 => "MMMMMCMLXXXVII",
+    36564 => "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMDLXIV"
   }
 
   ROMAN_NUMERALS.keys.each do |key|
