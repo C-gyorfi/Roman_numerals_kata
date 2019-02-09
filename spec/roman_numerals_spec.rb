@@ -1,10 +1,11 @@
 def roman_numerals(n)
-  return roman_numerals_less_nine(n) if n < 10
-  return roman_numerals_less_hundred(n / 10) + roman_numerals_less_nine(n-10) if n <= 19
-  return roman_numerals_less_hundred(n / 10) + roman_numerals_less_nine(n-20) if n <= 29
-  return roman_numerals_less_hundred(n / 10) + roman_numerals_less_nine(n-30) if n <= 39
-  return roman_numerals_less_hundred(n / 10) + roman_numerals_less_nine(n-40) if n <= 49
-  roman_numerals_less_hundred(n / 10) + roman_numerals_less_nine(n-50) if n <= 59
+  nrOfHundreds = n / 100
+  nrOfTens = (n - nrOfHundreds*100) / 10
+  nrOfsingle = n - nrOfHundreds*100 - nrOfTens*10
+
+  num_of_hundreds(nrOfHundreds) +
+  roman_numerals_less_hundred(nrOfTens) +
+  roman_numerals_less_nine(nrOfsingle)
 end
 
 def roman_numerals_less_nine(n)
@@ -19,6 +20,13 @@ def roman_numerals_less_hundred(n)
   return "XL" if n == 4
   return "L" + "X" * (n-5) if n > 4 && n < 9
   "XC"
+end
+
+def num_of_hundreds(n)
+  return "C" * n if n <= 3
+  return "DC" if n == 4
+  return "D" + "C" * (n-5) if n > 4 && n < 9
+  "CM"
 end
 
 describe "roman_numerals" do
@@ -59,7 +67,20 @@ describe "roman_numerals" do
     44 => "XLIV",
     45 => "XLV",
     50 => "L",
-    55 => "LV"
+    55 => "LV",
+    58 => "LVIII",
+    59 => "LIX",
+    60 => "LX",
+    61 => "LXI",
+    70 => "LXX",
+    80 => "LXXX",
+    88 => "LXXXVIII",
+    90 => "XC",
+    99 => "XCIX",
+    100 => "C",
+    555 => "DLV",
+    557 => "DLVII",
+    999 => "CMXCIX"
   }
 
   ROMAN_NUMERALS.keys.each do |key|
